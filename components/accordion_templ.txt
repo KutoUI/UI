@@ -1,0 +1,1 @@
+<details name=\"uniqname\" open><summary>Title 1</summary><p>details one</p></details> <details name=\"uniqname\" open><summary>Title 2</summary><p>details two</p></details> <details name=\"uniqname\" open><summary>Title 3</summary><p>details three</p></details>
