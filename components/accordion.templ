@@ -1,16 +1,25 @@
 package components
 
-templ Accordian() {
-    <details name="uniqname" open>
-        <summary>Title 1</summary>
-        <p>details one</p>
-    </details>
-    <details name="uniqname" open>
-        <summary>Title 2</summary>
-        <p>details two</p>
-    </details>
-    <details name="uniqname" open>
-        <summary>Title 3</summary>
-        <p>details three</p>
-    </details>
+type AccordianRow struct {
+    Class string
+    Summary templ.Component
+    Content templ.Component
+    Open bool
+}
+
+type AccordianArgs struct {
+    Name string
+    Class string
+    Rows []AccordianRow
+}
+
+templ Accordian(args AccordianArgs) {
+    <section class={args.Class}>
+        for _, row := range args.Rows {
+            <details name={args.Name} class={row.Class} open?={row.Open}>
+                <summary>@row.Summary</summary>
+                <p>@row.Content</p>
+            </details>
+        }
+    </section>
 }
