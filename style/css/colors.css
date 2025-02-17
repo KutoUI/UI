@@ -1,0 +1,29 @@
+:root {
+    --color: rgb(171, 177, 191);
+    --background-color: rgb(20, 22, 26);
+
+    --is-primary-text: rgb(0, 31, 26);
+    --is-primary-background: rgb(0, 209, 178);
+
+    --is-link-text: rgb(245, 246, 255);
+    --is-link-background: rgb(66, 88, 255);
+
+    --is-info-text: rgb(0, 31, 26);
+    --is-info-background: rgb(102, 209, 255);
+
+    --is-success-text: rgb(0, 31, 26);
+    --is-success-background: rgb(72, 199, 142);
+
+    --is-warning-text: rgb(0, 31, 26);
+    --is-warning-background: rgb(255, 183, 15);
+
+    --is-danger-text: rgb(0, 31, 26);
+    --is-danger-background: rgb(255, 102, 133);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --color: rgb(0,0,0);
+        --background-color: #ffffff;
+    }
+}
