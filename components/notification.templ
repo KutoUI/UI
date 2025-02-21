@@ -56,13 +56,13 @@ templ Notification(args NotificationArgs) {
         }
     }}
 
+    @notificationStyleHandle.Once() {
+        @notificationStyle()
+    }
+    @notificationJavaScriptHandle.Once() {
+        @notificationJavaScript()
+    }
     <div class={"kutoui_notification", string(args.Palette), args.Class}>
-        @notificationStyleHandle.Once() {
-            @notificationStyle()
-        }
-        @notificationJavaScriptHandle.Once() {
-            @notificationJavaScript()
-        }
         <button class="kutoui_notification_close">X</button>
         <div>@args.Content</div>
     </div>

@@ -59,11 +59,10 @@ templ accordianStyle() {
 }
 
 templ Accordian(args AccordianArgs) {
+    @accordianStyleHandle.Once() {
+        @accordianStyle()
+    }
     <section class={"kutoui_accordian", args.Class}>
-        @accordianStyleHandle.Once() {
-            @accordianStyle()
-        }
-
         for _, row := range args.Rows {
             <details name={args.Name} class={row.Class} open?={row.Open}>
                 <summary>@row.Summary</summary>
