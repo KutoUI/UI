@@ -1,7 +1,7 @@
 package style
 
 import (
-    "embed"
+	"embed"
 )
 
 //go:embed css/*.css
@@ -14,5 +14,5 @@ func GetSharedStyle() string {
 	colors, _ := folder.ReadFile("css/colors.css")
 	core, _ := folder.ReadFile("css/core.css")
 
-	return string(reset)+string(boxmodel)+string(colors)+string(core)
+	return string(reset) + string(boxmodel) + string(colors) + string(core)
 }

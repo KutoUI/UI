@@ -1,0 +1,69 @@
+package components
+
+import (
+    "github.com/KutoUI/UI/style"
+)
+
+type NotificationArgs struct {
+    Class string
+    Palette style.PaletteClass
+    Content templ.Component
+}
+
+var notificationStyleHandle = templ.NewOnceHandle()
+var notificationJavaScriptHandle = templ.NewOnceHandle()
+
+templ notificationStyle() {
+    <style type="text/css">
+        .kutoui_notification {
+            --kutoui_notification_padding: 1rem;
+            
+            position: relative;
+            border-radius: calc(var(--kutoui_notification_padding) / 2);
+            padding: var(--kutoui_notification_padding);
+            padding-right: calc(var(--kutoui_notification_padding) * 2.5);
+
+            & > button {
+                position: absolute;
+                top: var(--kutoui_notification_padding);
+                right: var(--kutoui_notification_padding);
+                border-radius: var(--kutoui_notification_padding);
+                background-color: rgba(0, 0, 0, 0.5);
+                color: var(--color);
+                border: 0px transparent;
+                cursor: pointer;
+            }
+        }
+    </style>
+}
+
+templ notificationJavaScript() {
+    <script>
+        window.addEventListener("load", ()=>{
+            document.body.addEventListener("click", (e)=>{
+                if(e.target.classList.contains("kutoui_notification_close")) {
+                    e.target.closest(".kutoui_notification").remove();
+                }
+            });
+        });
+    </script>
+}
+
+templ Notification(args NotificationArgs) {
+    {{
+        if(args.Palette=="") {
+            args.Palette=style.Palette.IsBlank
+        }
+    }}
+
+    <div class={"kutoui_notification", string(args.Palette), args.Class}>
+        @notificationStyleHandle.Once() {
+            @notificationStyle()
+        }
+        @notificationJavaScriptHandle.Once() {
+            @notificationJavaScript()
+        }
+        <button class="kutoui_notification_close">X</button>
+        <div>@args.Content</div>
+    </div>
+}
