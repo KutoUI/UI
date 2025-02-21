@@ -1,6 +1,7 @@
 :root {
     --color: rgb(171, 177, 191);
     --background-color: rgb(20, 22, 26);
+    --border-color: grey;
 
     --is-primary-text: rgb(0, 31, 26);
     --is-primary-background: rgb(0, 209, 178);
