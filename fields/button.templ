@@ -1,0 +1,33 @@
+package fields
+
+import (
+    "github.com/KutoUI/UI/style"
+    "github.com/KutoUI/UI/components"
+)
+
+type Button struct {
+    BaseField
+    Class string
+    Palette style.PaletteClass
+    Content templ.Component
+    Disabled bool
+    Type string
+}
+
+func (b Button) GetBaseField() BaseField {
+	return b.BaseField
+}
+
+func (b *Button) Configure() {
+    b.BaseField.Configure()
+}
+
+func (b Button) Display() templ.Component {
+    return components.Button(components.ButtonArgs{
+        Class: b.Class,
+        Palette: b.Palette,
+        Content: b.Content,
+        Disabled: b.Disabled,
+        Type: b.Type,
+    })
+}

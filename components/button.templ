@@ -1,0 +1,74 @@
+package components
+
+import (
+    "github.com/KutoUI/UI/style"
+)
+
+type ButtonArgs struct {
+    Class string
+    Palette style.PaletteClass
+    Content templ.Component
+    Href string
+    Target string
+    Disabled bool
+    Type string
+}
+
+var buttonStyleHandle = templ.NewOnceHandle()
+
+templ buttonStyle() {
+    <style type="text/css">
+        .kutoui_button {
+            display: block;
+            text-decoration: none;
+            border: 0px transparent;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            line-height: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            appearance: none;
+
+            &[disabled] {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+    </style>
+}
+
+templ Button(args ButtonArgs) {
+    {{
+        if(args.Palette=="") {
+            args.Palette=style.Palette.IsBlank
+        }
+    }}
+
+    @buttonStyleHandle.Once() {
+        @buttonStyle()
+    }
+    
+    if args.Href!="" {
+        <a
+            class={"kutoui_button", args.Class, string(args.Palette)}
+            href={templ.URL(args.Href)}
+            disabled?={args.Disabled}
+            if args.Target!="" {
+                target={args.Target}
+            }
+        >
+            @args.Content
+        </a>
+    } else {
+        <button
+            class={"kutoui_button", args.Class, string(args.Palette)}
+            disabled?={args.Disabled}
+            if args.Type!="" {
+                type={args.Type}
+            }
+        >
+            @args.Content
+        </button>
+    }
+}
