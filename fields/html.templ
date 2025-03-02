@@ -1,0 +1,26 @@
+package fields
+
+type Html struct {
+    BaseField
+    Html string
+}
+
+func (h Html) GetBaseField() BaseField {
+	return h.BaseField
+}
+
+func (h *Html) Configure() {
+    h.BaseField.Configure()
+
+    if h.Html=="" {
+        h.Html="<p>No Content!</p>"
+    }
+}
+
+templ htmlDisplay(h Html) {
+    @templ.Raw(h.Html)
+}
+
+func (h Html) Display() templ.Component {
+    return htmlDisplay(h)
+}

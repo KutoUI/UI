@@ -1,0 +1,72 @@
+package forms
+
+import (
+    "github.com/KutoUI/UI/fields"
+)
+
+type Form struct {
+	Action string
+	Enctype EnctypeInstance
+	Method MethodInstance
+	Fields []fields.Field
+}
+
+var formStyleHandle = templ.NewOnceHandle()
+
+templ formStyle() {
+    <style type="text/css">
+		.kutoui_field {
+			margin-bottom: 1rem;
+		}
+    </style>
+}
+
+templ displayFieldWithWrap(f fields.Field) {
+	<div
+		class={"kutoui_field", "kutoui_field_" + f.GetBaseField().Name}
+	>
+		@f.Display()
+	</div>
+}
+
+templ displayForm(f *Form) {
+	{{
+		if f.Enctype=="" {
+			f.Enctype=Enctype.UrlEncoded
+		}
+
+		if f.Method=="" {
+			f.Method=Method.GET
+		}
+	}}
+
+	@formStyleHandle.Once() {
+        @formStyle()
+    }
+
+	<form
+		action={templ.URL(f.Action)}
+		enctype={string(f.Enctype)}
+		method={string(f.Method)}
+		class={"kutoui_form"}
+	>
+		for _, field := range f.Fields {
+			{{
+				field.Configure()
+			}}
+
+			if field.GetBaseField().NoWrap {
+				@field.Display()
+			} else {
+				@displayFieldWithWrap(field)
+			}
+		}
+
+		//stand in till button component/field is implmented
+		<button type="submit">Place Holder Submit</button>
+	</form>
+}
+
+func (f *Form) Display() templ.Component {
+	return displayForm(f)
+}
