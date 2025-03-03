@@ -42,7 +42,7 @@ func notificationStyle() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style type=\"text/css\">\n        .kutoui_notification {\n            --kutoui_notification_padding: 1rem;\n            \n            position: relative;\n            border-radius: calc(var(--kutoui_notification_padding) / 2);\n            padding: var(--kutoui_notification_padding);\n            padding-right: calc(var(--kutoui_notification_padding) * 2.5);\n\n            & > button {\n                position: absolute;\n                top: var(--kutoui_notification_padding);\n                right: var(--kutoui_notification_padding);\n                border-radius: var(--kutoui_notification_padding);\n                background-color: rgba(0, 0, 0, 0.5);\n                color: var(--color);\n                border: 0px transparent;\n                cursor: pointer;\n            }\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style type=\"text/css\">\n        .kutoui_notification {\n            --kutoui_notification_padding: 1rem;\n            \n            position: relative;\n            border-radius: calc(var(--kutoui_notification_padding) / 2);\n            padding: var(--kutoui_notification_padding);\n            padding-right: calc(var(--kutoui_notification_padding) * 2.5);\n\n            & > button {\n                position: absolute;\n                top: var(--kutoui_notification_padding);\n                right: var(--kutoui_notification_padding);\n                border-radius: var(--kutoui_notification_padding);\n                background-color: rgba(0, 0, 0, 0.5);\n                color: var(--color);\n                border: 0px transparent;\n                cursor: pointer;\n                height: 1.1rem;\n                width: 1.1rem;\n\n                &:before, &:after {\n                    height: 50%;\n                    width: 2px;\n                    background-color: white;\n                    content: \"\";\n                    display: block;\n                    left: 50%;\n                    position: absolute;\n                    top: 50%;\n                    /* transform: translateX(-50%) translateY(-50%) rotate(45deg); */\n                    transform-origin: center center;\n                }\n\n                &:before {\n                    transform: translateX(-50%) translateY(-50%) rotate(45deg);\n                }\n                &:after {\n                    transform: translateX(-50%) translateY(-50%) rotate(-45deg);\n                }\n            }\n        }\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -166,7 +166,7 @@ func Notification(args NotificationArgs) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><button class=\"kutoui_notification_close\">X</button><div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><button class=\"kutoui_notification_close\"></button><div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
