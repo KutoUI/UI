@@ -13,13 +13,15 @@ import (
 )
 
 type ButtonArgs struct {
-	Class    string
-	Palette  style.PaletteClass
-	Content  templ.Component
-	Href     string
-	Target   string
-	Disabled bool
-	Type     string
+	Class     string
+	Palette   style.PaletteClass
+	Content   templ.Component
+	Href      string
+	Target    string
+	Disabled  bool
+	Type      string
+	IconLeft  templ.Component
+	IconRight templ.Component
 }
 
 var buttonStyleHandle = templ.NewOnceHandle()
@@ -45,7 +47,7 @@ func buttonStyle() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style type=\"text/css\">\n        .kutoui_button {\n            display: block;\n            text-decoration: none;\n            border: 0px transparent;\n            cursor: pointer;\n            padding: 0.5rem 1rem;\n            border-radius: 0.5rem;\n            line-height: inherit;\n            font-family: inherit;\n            font-size: inherit;\n            appearance: none;\n\n            &[disabled] {\n                opacity: 0.5;\n                cursor: not-allowed;\n            }\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style type=\"text/css\">\n        .kutoui_button {\n            display: flex;\n            align-items: center;\n            gap: 0.5rem;\n            text-decoration: none;\n            border: 0px transparent;\n            cursor: pointer;\n            padding: 0.5rem 1rem;\n            border-radius: 0.5rem;\n            line-height: inherit;\n            font-family: inherit;\n            font-size: inherit;\n            appearance: none;\n\n            &[disabled] {\n                opacity: 0.5;\n                cursor: not-allowed;\n            }\n        }\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -146,7 +148,7 @@ func Button(args ButtonArgs) templ.Component {
 				var templ_7745c5c3_Var7 string
 				templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(args.Target)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `local-libs/ui/components/button.templ`, Line: 58, Col: 35}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `local-libs/ui/components/button.templ`, Line: 62, Col: 35}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 				if templ_7745c5c3_Err != nil {
@@ -206,7 +208,7 @@ func Button(args ButtonArgs) templ.Component {
 				var templ_7745c5c3_Var10 string
 				templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(args.Type)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `local-libs/ui/components/button.templ`, Line: 68, Col: 31}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `local-libs/ui/components/button.templ`, Line: 72, Col: 31}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 				if templ_7745c5c3_Err != nil {
@@ -221,9 +223,21 @@ func Button(args ButtonArgs) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
+			if args.IconLeft != nil {
+				templ_7745c5c3_Err = args.IconLeft.Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
 			templ_7745c5c3_Err = args.Content.Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
+			}
+			if args.IconRight != nil {
+				templ_7745c5c3_Err = args.IconRight.Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
 			}
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</button>")
 			if templ_7745c5c3_Err != nil {

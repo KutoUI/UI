@@ -12,6 +12,8 @@ type Button struct {
     Content templ.Component
     Disabled bool
     Type string
+    IconLeft templ.Component
+    IconRight templ.Component
 }
 
 func (b Button) GetBaseField() BaseField {
@@ -29,5 +31,7 @@ func (b Button) Display() templ.Component {
         Content: b.Content,
         Disabled: b.Disabled,
         Type: b.Type,
+        IconLeft: b.IconLeft,
+        IconRight: b.IconRight,
     })
 }

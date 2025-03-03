@@ -15,11 +15,13 @@ import (
 
 type Button struct {
 	BaseField
-	Class    string
-	Palette  style.PaletteClass
-	Content  templ.Component
-	Disabled bool
-	Type     string
+	Class     string
+	Palette   style.PaletteClass
+	Content   templ.Component
+	Disabled  bool
+	Type      string
+	IconLeft  templ.Component
+	IconRight templ.Component
 }
 
 func (b Button) GetBaseField() BaseField {
@@ -32,11 +34,13 @@ func (b *Button) Configure() {
 
 func (b Button) Display() templ.Component {
 	return components.Button(components.ButtonArgs{
-		Class:    b.Class,
-		Palette:  b.Palette,
-		Content:  b.Content,
-		Disabled: b.Disabled,
-		Type:     b.Type,
+		Class:     b.Class,
+		Palette:   b.Palette,
+		Content:   b.Content,
+		Disabled:  b.Disabled,
+		Type:      b.Type,
+		IconLeft:  b.IconLeft,
+		IconRight: b.IconRight,
 	})
 }
 

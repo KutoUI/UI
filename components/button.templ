@@ -12,6 +12,8 @@ type ButtonArgs struct {
     Target string
     Disabled bool
     Type string
+    IconLeft templ.Component
+    IconRight templ.Component
 }
 
 var buttonStyleHandle = templ.NewOnceHandle()
@@ -19,7 +21,9 @@ var buttonStyleHandle = templ.NewOnceHandle()
 templ buttonStyle() {
     <style type="text/css">
         .kutoui_button {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             text-decoration: none;
             border: 0px transparent;
             cursor: pointer;
@@ -68,7 +72,13 @@ templ Button(args ButtonArgs) {
                 type={args.Type}
             }
         >
+            if args.IconLeft!=nil {
+                @args.IconLeft
+            }
             @args.Content
+            if args.IconRight!=nil {
+                @args.IconRight
+            }
         </button>
     }
 }
