@@ -1,0 +1,104 @@
+package fields
+
+import (
+    "strconv"
+)
+
+type Input struct {
+    BaseField
+    Type string
+    PlaceHolder string
+    IconRight templ.Component
+    IconLeft templ.Component
+}
+
+func (i Input) GetBaseField() BaseField {
+	return i.BaseField
+}
+
+func (i *Input) Configure() {
+    i.BaseField.Configure()
+}
+
+templ inputStyle() {
+    <style type="text/css">
+        .kutoui_input {
+
+            label {
+                display: block;
+                padding-bottom: 0.5rem;
+            }
+
+            & > div {
+                border: 1px solid var(--border-color);
+                border-radius: 0.5rem;
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                padding: 0 0.5rem;
+
+                &:has(:focus-visible) {
+                    outline-offset: 0px;
+                    outline: -webkit-focus-ring-color auto 1px;
+                }
+            
+                input {
+                    display: block;
+                    outline: 0px transparent;
+                    border: 0px transparent;
+                    color: inherit;
+                    background-color: transparent;
+                    width: 100%;
+                    padding: 0.5rem 0;
+
+                    @media (prefers-color-scheme: dark) {
+                        &::-webkit-calendar-picker-indicator {
+                            filter: invert(0.8);
+                        }
+                    }
+                }
+            }
+
+        }
+    </style>
+}
+
+var inputStyleHandle = templ.NewOnceHandle()
+
+templ inputDisplay(i Input) {
+    @inputStyleHandle.Once() {
+        @inputStyle()
+    }
+
+
+    <div class={"kutoui_input"}>
+        if i.BaseField.Label != "" {
+            <label for={i.BaseField.Id}>{i.BaseField.Label}</label>
+        }
+
+        <div>
+            if i.IconLeft != nil {
+                @i.IconLeft
+            }
+            <input
+                if i.Type != "" {
+                    type={i.Type}
+                }
+                name={i.BaseField.Name}
+                id={i.BaseField.Id}
+                required?={i.BaseField.Required}
+                minlength={strconv.Itoa(i.BaseField.MinLength)}
+                maxlength={strconv.Itoa(i.BaseField.MaxLength)}
+                placeholder={i.PlaceHolder}
+                value={i.BaseField.Value}
+            />
+            if i.IconRight != nil {
+                @i.IconRight
+            }
+        </div>
+    </div>
+}
+
+func (i Input) Display() templ.Component {
+    return inputDisplay(i)
+}
