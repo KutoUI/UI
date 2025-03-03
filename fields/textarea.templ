@@ -20,14 +20,22 @@ func (t *TextArea) Configure() {
 templ textareaStyle() {
     <style type="text/css">
         .kutoui_textarea {
-            background-color: transparent;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            min-width: 100%;
-            max-width: 100%;
-            resize: vertical;
-            min-height: 5rem;
-            color: var(--color);
+            label {
+                display: block;
+                padding-bottom: 0.5rem;
+            }
+
+            textarea {
+                background-color: transparent;
+                border-radius: 0.5rem;
+                padding: 0.5rem;
+                min-width: 100%;
+                max-width: 100%;
+                resize: vertical;
+                min-height: 5rem;
+                color: inherit;
+                border-color: var(--border-color);
+            }
         }
     </style>
 }
@@ -39,21 +47,22 @@ templ textAreaDisplay(t TextArea) {
         @textareaStyle()
     }
 
-    if t.BaseField.Label != "" {
-        <label for={t.BaseField.Id}>{t.BaseField.Label}</label>
-    }
+    <div class={"kutoui_textarea"}>
+        if t.BaseField.Label != "" {
+            <label for={t.BaseField.Id}>{t.BaseField.Label}</label>
+        }
 
-    <textarea
-        name={t.BaseField.Name}
-        id={t.BaseField.Id}
-        required?={t.BaseField.Required}
-        minlength={strconv.Itoa(t.BaseField.MinLength)}
-        maxlength={strconv.Itoa(t.BaseField.MaxLength)}
-        placeholder={t.PlaceHolder}
-        class={"kutoui_textarea"}
-    >
-        {t.BaseField.Value}
-    </textarea>
+        <textarea
+            name={t.BaseField.Name}
+            id={t.BaseField.Id}
+            required?={t.BaseField.Required}
+            minlength={strconv.Itoa(t.BaseField.MinLength)}
+            maxlength={strconv.Itoa(t.BaseField.MaxLength)}
+            placeholder={t.PlaceHolder}
+        >
+            {t.BaseField.Value}
+        </textarea>
+    </div>
 }
 
 func (t TextArea) Display() templ.Component {
