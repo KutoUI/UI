@@ -1,0 +1,66 @@
+package fields
+
+type Select struct {
+    BaseField
+    Options []SelectOption
+    PlaceHolder string
+}
+
+type SelectOption struct {
+    Value string
+    Label string
+}
+
+func (s Select) GetBaseField() BaseField {
+	return s.BaseField
+}
+
+func (s *Select) Configure() {
+    s.BaseField.Configure()
+}
+
+templ selectStyle() {
+    <style type="text/css">
+        .kutoui_select {
+            label {
+                display: block;
+                padding-bottom: 0.5rem;
+            }
+
+            select {
+                border: 1px solid var(--border-color);
+                border-radius: 0.5rem;
+                display: block;
+                width: 100%;
+                padding: 0.5rem 0.5rem;
+                font-size: 1rem;
+                color: var(--text-color);
+                background-color: var(--background-color);
+            }
+        }
+    </style>
+}
+
+var selectStyleHandle = templ.NewOnceHandle()
+
+templ selectDisplay(s Select) {
+    @selectStyleHandle.Once() {
+        @selectStyle()
+    }
+
+    <div class={"kutoui_select"}>
+        <label for={s.BaseField.Id}>{s.BaseField.Label}</label>
+        <select id={s.BaseField.Id} name={s.BaseField.Name}>
+            if s.PlaceHolder != "" {
+                <option value="" disabled?={s.BaseField.Required} selected?={s.BaseField.Value==""}>{s.PlaceHolder}</option>
+            }
+            for _, option := range s.Options {
+                <option selected?={s.BaseField.Value==option.Value} value={option.Value}>{option.Label}</option>
+            }
+        </select>
+    </div>
+}
+
+func (s Select) Display() templ.Component {
+    return selectDisplay(s)
+}
