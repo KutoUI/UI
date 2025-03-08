@@ -26,15 +26,25 @@ templ inputStyle() {
 
             label {
                 display: block;
+            }
+
+            &:not(:has(input[type="checkbox"])) label {
                 padding-bottom: 0.5rem;
             }
 
-            & > div {
+            & div:not(:has(input[type="checkbox"])) {
                 border: 1px solid var(--border-color);
                 border-radius: 0.5rem;
-                display: flex;
-                gap: 1rem;
                 align-items: center;
+
+                input {
+                    width: 100%;
+                }
+            }
+
+            & > div {
+                display: flex;
+                gap: 0.5rem;
                 padding: 0 0.5rem;
 
                 &:has(:focus-visible) {
@@ -48,7 +58,6 @@ templ inputStyle() {
                     border: 0px transparent;
                     color: inherit;
                     background-color: transparent;
-                    width: 100%;
                     padding: 0.5rem 0;
 
                     &::file-selector-button {
@@ -80,7 +89,7 @@ templ inputDisplay(i Input) {
 
 
     <div class={"kutoui_input"}>
-        if i.BaseField.Label != "" {
+        if i.BaseField.Label != "" && i.Type != "checkbox" {
             <label for={i.BaseField.Id}>{i.BaseField.Label}</label>
         }
 
@@ -100,6 +109,9 @@ templ inputDisplay(i Input) {
                 placeholder={i.PlaceHolder}
                 value={i.BaseField.Value}
             />
+            if i.BaseField.Label != "" && i.Type == "checkbox" {
+                <label for={i.BaseField.Id}>{i.BaseField.Label}</label>
+            }
             if i.IconRight != nil {
                 @i.IconRight
             }
