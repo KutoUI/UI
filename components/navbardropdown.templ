@@ -1,0 +1,94 @@
+package components
+
+type NavbarDropdown struct {
+    Text string
+    SubItems []NavbarItem
+}
+
+templ navbarDropdownStyle() {
+    <style>
+        .kutoui_navbar_dropdown {
+            position: relative;
+            display: inline-block;
+        
+            a {
+                padding: 1rem 0.5rem;
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+                cursor: pointer;
+                position: relative;
+
+                &:hover {
+                    background-color: rgba(0,0,0,0.3);
+                }
+            }
+
+            & > a::after {
+                border-bottom: 2px solid;
+                border-left: 2px solid;
+                border-color: var(--color);
+                content: "";
+                transform: rotate(-45deg);
+                display: inline-block;
+                height: 0.5rem;
+                width: 0.5rem;
+            }
+
+            & > div {
+                display: none;
+                position: absolute;
+                background-color: var(--background-color);
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+
+                .kutoui_navbar_dropdown {
+                    & > a::after {
+                        border-bottom: 2px solid;
+                        border-right: 2px solid;
+                        border-left: 0px solid;
+                        border-color: var(--color);
+                        content: "";
+                        transform: rotate(-45deg);
+                        display: inline-block;
+                        height: 0.5rem;
+                        width: 0.65rem;
+                    }
+
+                    & > div {
+                        top: 0;
+                        left: 100%;
+                    }
+                }
+            }
+            
+            &:hover > div {
+                display: block;
+            }
+        }
+
+
+
+    </style>
+}
+
+var navbarDropdownStyleHandle = templ.NewOnceHandle()
+
+templ navbarDropdownDisplay(n NavbarDropdown) {
+    @navbarDropdownStyleHandle.Once() {
+        @navbarDropdownStyle()
+    }
+    <div class={"kutoui_navbar_dropdown"}>
+        <a>{n.Text}</a>
+        <div>
+            for _, item := range n.SubItems {
+                @item.Display()
+            }
+        </div>
+    </div>
+}
+
+func (n NavbarDropdown) Display() templ.Component {
+    return navbarDropdownDisplay(n)
+}

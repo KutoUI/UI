@@ -1,0 +1,47 @@
+package components
+
+type NavbarArgs struct {
+    Brand templ.Component
+    Links []NavbarItem
+}
+
+type NavbarItem interface {
+    Display() templ.Component
+}
+
+var navbarStyleHandle = templ.NewOnceHandle()
+
+templ navbarStyle() {
+    <style>
+        .kutoui_navbar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            
+            .kutoui_navbar_links {
+                display: flex;
+                gap: 0.25rem;
+            }
+        }
+
+    </style>
+}
+
+templ Navbar(n NavbarArgs) {
+    @navbarStyleHandle.Once() {
+        @navbarStyle()
+    }
+
+    <nav class="kutoui_navbar">
+        <div>
+            if n.Brand != nil {
+                @n.Brand
+            }
+        </div>
+        <div class="kutoui_navbar_links">
+            for _, link := range n.Links {
+                @link.Display()
+            }
+        </div>
+    </nav>
+}

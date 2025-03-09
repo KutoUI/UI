@@ -1,0 +1,34 @@
+package components
+
+type NavbarLink struct {
+    Text string
+    Href string
+}
+
+templ navbarLinkStyle() {
+    <style>
+        .kutoui_navbar_link {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 1rem 0.5rem;
+            display: block;
+
+            &:hover {
+                background-color: rgba(0,0,0,0.3);
+            }
+        }
+    </style>
+}
+
+var navbarLinkStyleHandle = templ.NewOnceHandle()
+
+templ navbarLinkDisplay(n NavbarLink) {
+    @navbarLinkStyleHandle.Once() {
+        @navbarLinkStyle()
+    }
+    <a class={"kutoui_navbar_link"} href={templ.URL(n.Href)}>{n.Text}</a>
+}
+
+func (n NavbarLink) Display() templ.Component {
+    return navbarLinkDisplay(n)
+}

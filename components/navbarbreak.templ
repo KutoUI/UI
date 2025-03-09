@@ -1,0 +1,25 @@
+package components
+
+type NavbarBreak struct {}
+
+templ navbarBreakStyle() {
+    <style>
+        .kutoui_navbar_break {
+            margin: 0 0.5rem;
+            opacity: 0.75;
+        }
+    </style>
+}
+
+var navbarBreakStyleHandle = templ.NewOnceHandle()
+
+templ navbarBreakDisplay(n NavbarBreak) {
+    @navbarBreakStyleHandle.Once() {
+        @navbarBreakStyle()
+    }
+    <hr class={"kutoui_navbar_break"} />
+}
+
+func (n NavbarBreak) Display() templ.Component {
+    return navbarBreakDisplay(n)
+}
