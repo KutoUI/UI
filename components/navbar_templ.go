@@ -40,7 +40,7 @@ func navbarStyle() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style>\n        .kutoui_navbar {\n            display: flex;\n            gap: 1rem;\n            align-items: center;\n            \n            .kutoui_navbar_links {\n                display: flex;\n                gap: 0.25rem;\n            }\n        }\n\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style>\n        .kutoui_navbar {\n            display: flex;\n            gap: 1rem;\n            align-items: center;\n\n            .kutoui_header_wrapper {\n                display: flex;\n                gap: 1rem;\n                align-items: center;\n\n                label {\n                    display: none;\n                    flex-direction: column;\n                    justify-content: space-between;\n                    gap: 0.25rem;\n                    cursor: pointer;\n\n                    span {\n                        display: block;\n                        width: 1rem;\n                        height: 0.125rem;\n                        background-color: var(--color);\n                        pointer-events: none;\n                    }\n                }\n            }\n            \n            .kutoui_navbar_links {\n                display: flex;\n                gap: 0.25rem;\n            }\n        }\n\n        @media only screen and (max-width: 1000px) {\n            .kutoui_navbar {\n                flex-direction: column;\n                align-items: start;\n                gap: 0;\n\n                .kutoui_header_wrapper {\n                    width: 100%;\n                    justify-content: space-between;\n                    padding: 0.5rem;\n                    \n                    label {\n                        display: flex;\n                    }\n                }\n\n                .kutoui_navbar_links {\n                    display: none;\n                    flex-direction: column;\n                    gap: 0.25rem;\n                }\n\n                &:has(#kutoui_mobile_navbar_toggle:checked) {\n                    .kutoui_navbar_links {\n                        display: flex;\n                    }\n                }\n            }\n        }\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -91,7 +91,7 @@ func Navbar(n NavbarArgs) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<nav class=\"kutoui_navbar\"><div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<nav class=\"kutoui_navbar\"><div class=\"kutoui_header_wrapper\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -101,7 +101,7 @@ func Navbar(n NavbarArgs) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div class=\"kutoui_navbar_links\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<label for=\"kutoui_mobile_navbar_toggle\"><span></span> <span></span> <span></span></label> <input type=\"checkbox\" id=\"kutoui_mobile_navbar_toggle\" style=\"display: none;\"></div><div class=\"kutoui_navbar_links\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

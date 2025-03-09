@@ -68,8 +68,15 @@ templ navbarDropdownStyle() {
             }
         }
 
-
-
+        @media only screen and (max-width: 1000px) {
+            .kutoui_navbar_dropdown {
+                & > div {
+                    position: unset;
+                    box-shadow: unset;
+                    padding-left: 1rem;
+                }
+            }
+        }
     </style>
 }
 
